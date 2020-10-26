@@ -7,7 +7,7 @@
 
 <p>Should you need to contact us please write your question below:</p>
 
-<form method="post" action="/Support/Contact">
+<form method="post" asp-action="Contact" asp-controller="Support">
     <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
@@ -20,14 +20,6 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
-    
-    <div style="margin-top:5px;">
-        @if (ViewData["feedback"] != null)
-        {
-            <div class="alert alert-primary" role="alert">
-                @ViewData["feedback"]
-            </div>
-        }
-    </div>
-  
+
 </form>
+
