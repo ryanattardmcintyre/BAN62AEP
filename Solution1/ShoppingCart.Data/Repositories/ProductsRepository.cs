@@ -6,6 +6,7 @@ using ShoppingCart.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace ShoppingCart.Data.Repositories
@@ -20,24 +21,27 @@ namespace ShoppingCart.Data.Repositories
 
         public Guid AddProduct(Product p)
         {
-            throw new NotImplementedException();
+            _context.Products.Add(p);
+            _context.SaveChanges();
+
+            return p.Id;
         }
 
         public void DeleteProduct(Guid id)
         {
-            throw new NotImplementedException();
+            Product p = GetProduct(id);
+            _context.Products.Remove(p);
+            _context.SaveChanges();
         }
 
         public Product GetProduct(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Products.SingleOrDefault(x => x.Id == id);
         }
 
         public IQueryable<Product> GetProducts()
         {
-
             return _context.Products;
-             
         }
     }
 }
