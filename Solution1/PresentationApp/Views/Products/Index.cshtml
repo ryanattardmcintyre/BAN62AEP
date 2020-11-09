@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Products Catalogue</h1>
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model)
+        {
+            
+            <div class="col-sm-4">
+
+                <div class="card " style="width: 18rem;">
+                    <img src="@p.ImageUrl"  class="card-img-top" >
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Name</h5>
+                        <p class="card-text">€ @p.Price</p>
+                        <a href="#" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+         }
+       </div>
+   </div>

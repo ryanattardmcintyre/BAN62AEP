@@ -16,11 +16,13 @@ namespace ShoppingCart.Data.Repositories
         ShoppingCartDbContext _context;
         public ProductsRepository(ShoppingCartDbContext context )
         {
+
             _context =   context;
         }
 
         public Guid AddProduct(Product p)
         {
+           
             _context.Products.Add(p);
             _context.SaveChanges();
 
@@ -28,19 +30,19 @@ namespace ShoppingCart.Data.Repositories
         }
 
         public void DeleteProduct(Guid id)
-        {
+        { 
             Product p = GetProduct(id);
             _context.Products.Remove(p);
             _context.SaveChanges();
         }
 
         public Product GetProduct(Guid id)
-        {
+        { 
             return _context.Products.SingleOrDefault(x => x.Id == id);
         }
 
         public IQueryable<Product> GetProducts()
-        {
+        { 
             return _context.Products;
         }
     }

@@ -31,9 +31,6 @@ namespace ShoppingCart.Application.Services
                            Category = new CategoryViewModel() { Id = p.Category.Id, Name = p.Category.Name }
                        };
 
-
-            
-
             return list;
         }
 
