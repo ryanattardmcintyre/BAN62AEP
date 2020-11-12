@@ -15,11 +15,17 @@
             <div class="col-sm-4">
 
                 <div class="card " style="width: 18rem;">
-                    <img src="@p.ImageUrl"  class="card-img-top" >
+ 
+                    <img src="@p.ImageUrl" class="card-img-top image" alt="image" crossorigin="anonymous">
+              
+                   
                     <div class="card-body">
                         <h5 class="card-title">@p.Name</h5>
                         <p class="card-text">€ @p.Price</p>
-                        <a href="#" class="btn btn-primary">Details</a>
+                      
+                        <a  href="Products/Details?id=@p.Id" class="btn btn-primary">Details</a>
+                  
+                        @*@Html.ActionLink("Details", "Details", new { id = p.Id }, new {@class="btn btn-primary"})*@
                     </div>
                 </div>
             </div>

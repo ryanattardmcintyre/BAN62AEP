@@ -24,7 +24,8 @@ namespace ShoppingCart.Domain.Models
 
         [Required]
         public Category Category { get; set; }
-
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
         public string ImageUrl { get; set; }
 
 
