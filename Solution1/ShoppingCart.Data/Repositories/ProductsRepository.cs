@@ -38,12 +38,12 @@ namespace ShoppingCart.Data.Repositories
 
         public Product GetProduct(Guid id)
         { 
-            return _context.Products.SingleOrDefault(x => x.Id == id);
+            return _context.Products.Include(x => x.Category).SingleOrDefault(x => x.Id == id);
         }
 
         public IQueryable<Product> GetProducts()
         { 
-            return _context.Products;
+            return _context.Products.Include(x=>x.Category);
         }
     }
 }

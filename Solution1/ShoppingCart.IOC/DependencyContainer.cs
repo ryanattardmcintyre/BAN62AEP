@@ -31,11 +31,20 @@ namespace ShoppingCart.IOC
         {
 
             services.AddDbContext<ShoppingCartDbContext>(options =>
-          options.UseSqlServer(
-             connectionString));
+          {
+              options.UseSqlServer(
+               connectionString);//.UseLazyLoadingProxies();
+                }
+                );
 
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductsService, ProductsService>();
+
+            services.AddScoped<ICategoryRepository, CategoriesRepository>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
+
+
+
         }
     }
 }

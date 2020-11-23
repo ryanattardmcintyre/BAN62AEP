@@ -23,6 +23,10 @@ namespace ShoppingCart.Data.Context
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
 
 
     }
