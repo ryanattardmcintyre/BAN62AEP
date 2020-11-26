@@ -19,6 +19,11 @@ namespace ShoppingCart.Application.Services
             _productsRepo = productsRepo;
         }
 
+
+
+
+
+
         public void AddProduct(ProductViewModel model)
         {
             Product p = new Product()
@@ -32,6 +37,11 @@ namespace ShoppingCart.Application.Services
             };
 
             _productsRepo.AddProduct(p);
+        }
+
+        public void DeleteProduct(Guid id)
+        {
+            _productsRepo.DeleteProduct(id);
         }
 
         public ProductViewModel GetProduct(Guid id)

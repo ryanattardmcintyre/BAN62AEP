@@ -36,19 +36,7 @@
     <div class="container">
         <main role="main" class="pb-3">
 
-            @if (ViewData["feedback"] != null)
-            {
-                <div class="alert alert-primary" role="alert">
-                    @ViewData["feedback"]
-                </div>
-            }
-
-            @if (ViewData["warning"] != null)
-            {
-                <div class="alert alert-danger" role="alert">
-                    @ViewData["warning"]
-                </div>
-            }
+          @Html.Partial("PartialFeedbackView")
 
             @RenderBody()
         </main>
