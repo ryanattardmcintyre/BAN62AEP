@@ -5,16 +5,16 @@
 
 
 
-@if (ViewData["feedback"] != null)
+@if (TempData["feedback"] != null)
 {
     <div class="alert alert-primary" role="alert">
-        @ViewData["feedback"]
+        @TempData["feedback"]
     </div>
 }
 
-@if (ViewData["warning"] != null)
+@if (TempData["warning"] != null)
 {
     <div class="alert alert-danger" role="alert">
-        @ViewData["warning"]
+        @TempData["warning"]
     </div>
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PresentationApp.Models;
 using ShoppingCart.Application.Interfaces;
@@ -13,10 +14,12 @@ namespace PresentationApp.Controllers
     {
         private IProductsService _prodService;
         private ICategoriesService _catService;
-        public ProductsController(IProductsService prodService, ICategoriesService categoryService)
+        private IWebHostEnvironment _env;
+        public ProductsController(IProductsService prodService, ICategoriesService categoryService, IWebHostEnvironment env)
         {
             _prodService = prodService;
             _catService = categoryService;
+            _env = env;
         }
 
         public IActionResult Index()
@@ -50,14 +53,32 @@ namespace PresentationApp.Controllers
             //validation
             try
             {
+                if (data.File != null)
+                {
+                    if(data.File.Length > 0)
+                    {
+                        string newFilename = @"/Images/" + Guid.NewGuid() + System.IO.Path.GetExtension(data.File.FileName);
+                        string absolutePath = _env.WebRootPath;
+
+                        //C:\Users\Ryan\source\repos\BAN62AEP\BAN62AEP\Solution1\PresentationApp\wwwroot\
+
+                        using (var stream = System.IO.File.Create(absolutePath + newFilename))
+                        {
+                            data.File.CopyTo(stream);
+                        }
+
+                        data.Product.ImageUrl = newFilename;
+                    }
+                }
+
                 _prodService.AddProduct(data.Product);
 
-                ViewData["feedback"] = "Product added successfully";
+                TempData["feedback"] = "Product added successfully";
                 ModelState.Clear();
             }
             catch(Exception ex)
             {
-                ViewData["warning"] = "Product was not added successfully. Check your inputs";
+                TempData["warning"] = "Product was not added successfully. Check your inputs";
             }
             
             var list = _catService.GetCategories();
@@ -71,12 +92,9 @@ namespace PresentationApp.Controllers
         {
             _prodService.DeleteProduct(id);
 
-            ViewData["feedback"] = "product deleted successfully";
-
-            var list = _prodService.GetProducts();
-            return View("Index", list);
-
-          //  return RedirectToAction("Index");
+            TempData["feedback"] = "product deleted successfully";  //ViewData should be changed to TempData
+           
+            return RedirectToAction("Index");
         }
 
 

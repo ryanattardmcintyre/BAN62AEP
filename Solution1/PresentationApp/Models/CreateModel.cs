@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Application.ViewModels;
+﻿using Microsoft.AspNetCore.Http;
+using ShoppingCart.Application.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace PresentationApp.Models
     {
         public ProductViewModel Product { get; set; }
         public List<CategoryViewModel> Categories { get; set; }
+
+        public IFormFile  File { get; set; }
     }
 }
