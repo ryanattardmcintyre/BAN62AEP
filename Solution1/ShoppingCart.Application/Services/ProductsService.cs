@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using ShoppingCart.Domain.Interfaces;
@@ -14,29 +15,31 @@ namespace ShoppingCart.Application.Services
     public class ProductsService : IProductsService
     {
         private IProductsRepository _productsRepo;
-        public ProductsService(IProductsRepository productsRepo)
+        private IMapper _autoMapper;
+        public ProductsService(IProductsRepository productsRepo, IMapper autoMapper)
         {
             _productsRepo = productsRepo;
+            _autoMapper = autoMapper;
         }
-
-
-
-
-
 
         public void AddProduct(ProductViewModel model)
         {
-            Product p = new Product()
-            {
-                Name = model.Name,
-                Description = model.Description,
-                ImageUrl = model.ImageUrl,
-                Price = model.Price,
-                Stock = model.Stock,
-                CategoryId = model.Category.Id
-            };
+            /* Product p = new Product()
+             {
+                 Name = model.Name,
+                 Description = model.Description,
+                 ImageUrl = model.ImageUrl,
+                 Price = model.Price,
+                 Stock = model.Stock,
+                 CategoryId = model.Category.Id
+             };
 
-            _productsRepo.AddProduct(p);
+             _productsRepo.AddProduct(p);
+            */
+
+            _productsRepo.AddProduct(_autoMapper.Map<Product>(model));
+
+
         }
 
         public void DeleteProduct(Guid id)
