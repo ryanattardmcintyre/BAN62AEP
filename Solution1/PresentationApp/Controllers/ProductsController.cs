@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PresentationApp.Models;
@@ -37,6 +38,7 @@ namespace PresentationApp.Controllers
         //-------------------- ADD -----------------------------
 
         [HttpGet] //this will be called before loading the Create page
+        [Authorize(Roles ="Admin")]
         public IActionResult Create()
         {
             CreateModel model = new CreateModel();
@@ -48,7 +50,8 @@ namespace PresentationApp.Controllers
         }
 
         [HttpPost] //2nd method will  be triggered when the user clicks on the submit button!
-        public IActionResult Create(CreateModel data)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create(CreateModel data) //postman, fiddler, burp, zap
         {
             //validation
             try
@@ -87,7 +90,7 @@ namespace PresentationApp.Controllers
             return View(data);
         }
 
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(Guid id)
         {
             _prodService.DeleteProduct(id);

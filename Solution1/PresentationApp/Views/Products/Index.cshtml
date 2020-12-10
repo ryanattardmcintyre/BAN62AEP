@@ -24,7 +24,13 @@
                         <p class="card-text">€ @p.Price</p>
 
                         <a href="Products/Details?id=@p.Id" class="btn btn-primary">Details</a>
-                        <a href="Products/Delete?id=@p.Id" class="btn btn-danger" onclick="return window.confirm('Are you sure?')">Delete</a>
+
+                        @if(User.IsInRole("Admin"))
+                        {
+                               <a href="Products/Delete?id=@p.Id" class="btn btn-danger" onclick="return window.confirm('Are you sure?')">Delete</a>
+                        }
+
+                        
 
                         @*@Html.ActionLink("Details", "Details", new { id = p.Id }, new {@class="btn btn-primary"})*@
                     </div>

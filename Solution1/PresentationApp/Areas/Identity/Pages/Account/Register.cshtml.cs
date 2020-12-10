@@ -22,6 +22,8 @@ namespace PresentationApp.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+    
+
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IMembersService _membersService;
@@ -30,7 +32,7 @@ namespace PresentationApp.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IMembersService memberService
+            IMembersService memberService 
             )
         {
             _userManager = userManager;
@@ -38,6 +40,7 @@ namespace PresentationApp.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _membersService = memberService;
+          
         }
 
         [BindProperty]
@@ -83,12 +86,12 @@ namespace PresentationApp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email }; 
+                var result = await _userManager.CreateAsync(user, Input.Password); // >>> AspNetUsers
                 if (result.Succeeded)
                 {
 
-                    //call MembersService to AddNewMember
+                    //call MembersService to AddNewMember into Members table
                     _membersService.AddMember(
                         new ShoppingCart.Application.ViewModels.MemberViewModel()
                         {
@@ -97,6 +100,9 @@ namespace PresentationApp.Areas.Identity.Pages.Account
                                LastName = Input.LastName
                         }
                         );
+
+                  await  _userManager.AddToRoleAsync(user, "User"); //default role is user
+                    
 
 
                     _logger.LogInformation("User created a new account with password.");
