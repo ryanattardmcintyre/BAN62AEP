@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PresentationApp.Models;
 using ShoppingCart.Application.Interfaces;
@@ -25,9 +26,45 @@ namespace PresentationApp.Controllers
 
         public IActionResult Index()
         {
-            var list = _prodService.GetProducts();
-            return View(list);
+
+            try
+            {
+                var list = _prodService.GetProducts();
+                return View(list);
+            }
+            catch(Exception ex)
+            {
+                TempData["Warning"] = "Failed to load the products. please try again later";
+                return RedirectToAction("Error", "Home");
+            }
         }
+
+
+    /*    public IActionResult Next()
+        {
+            int batchNo = 0;
+            string page = HttpContext.Session.GetString("batchNo");
+            if (page == null){ batchNo = 0;  .... }
+            else
+            { batchNo = Convert.ToInt32(HttpContext.Session.GetString("batchNo"));
+                batchNo += 10;
+
+              var list =  _prodService.GetProducts().Skip(batchNo).Take(10);
+
+                HttpContext.Session.SetString("batchNo", batchNo.ToString());
+                return View("Index", list);
+            }
+           
+        }
+    */
+
+
+      /*  public IActionResult Search(int category) //View you have to use a Form
+        {
+            var list = _prodService.GetProducts(category);
+            return RedirectToAction("Index", list);
+        }
+      */
 
         public IActionResult Details(Guid id)
         {

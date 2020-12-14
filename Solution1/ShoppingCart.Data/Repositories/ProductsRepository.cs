@@ -22,7 +22,7 @@ namespace ShoppingCart.Data.Repositories
 
         public Guid AddProduct(Product p)
         {
-            p.Category = null; //because the runtime thinks that it needs to add a new category
+          // p.Category = null; //because the runtime thinks that it needs to add a new category
            
             _context.Products.Add(p);
             _context.SaveChanges();

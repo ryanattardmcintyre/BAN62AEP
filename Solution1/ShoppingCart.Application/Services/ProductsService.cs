@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
@@ -24,6 +25,8 @@ namespace ShoppingCart.Application.Services
 
         public void AddProduct(ProductViewModel model)
         {
+            //ProductViewModel >>>>>> Product
+
             /* Product p = new Product()
              {
                  Name = model.Name,
@@ -38,8 +41,6 @@ namespace ShoppingCart.Application.Services
             */
 
             _productsRepo.AddProduct(_autoMapper.Map<Product>(model));
-
-
         }
 
         public void DeleteProduct(Guid id)
@@ -52,19 +53,25 @@ namespace ShoppingCart.Application.Services
             var p = _productsRepo.GetProduct(id);
             if (p == null) return null;
             else
-                return new ProductViewModel()
-                {
-                    Id = p.Id,
-                    Description = p.Description,
-                    ImageUrl = p.ImageUrl,
-                    Name = p.Name,
-                    Price = p.Price
-                    ,
-                    Category = new CategoryViewModel() { Id = p.Category.Id, Name = p.Category.Name }
+            {
+                /*  return new ProductViewModel()
+                    {
+                        Id = p.Id,
+                        Description = p.Description,
+                        ImageUrl = p.ImageUrl,
+                        Name = p.Name,
+                        Price = p.Price
+                        ,
+                        Category = new CategoryViewModel() { Id = p.Category.Id, Name = p.Category.Name }
 
-                };
+                    };
+             */
 
+                var result = _autoMapper.Map<ProductViewModel>(p);
+                return result;
+            }
 
+          
            // var p = GetProducts().SingleOrDefault(x => x.Id == id);
          //   return p;
         }
@@ -72,18 +79,22 @@ namespace ShoppingCart.Application.Services
         public IQueryable<ProductViewModel> GetProducts()
         {
             //this whole method will use linq to convert from Iqueryable<Product> to Iqueryable<ProductViewModel>
-            var list = from p in _productsRepo.GetProducts()//.Include(x=>x.Category)  
-                       select new ProductViewModel()
-                       {
-                           Id = p.Id,
-                           Description = p.Description,
-                           ImageUrl = p.ImageUrl,
-                           Name = p.Name,
-                           Price = p.Price,
-                           Category = new CategoryViewModel() { Id = p.Category.Id, Name = p.Category.Name }
-                       };
+            /* var list = from p in _productsRepo.GetProducts()//.Include(x=>x.Category)  
+                        select new ProductViewModel()
+                        {
+                            Id = p.Id,
+                            Description = p.Description,
+                            ImageUrl = p.ImageUrl,
+                            Name = p.Name,
+                            Price = p.Price,
+                            Category = new CategoryViewModel() { Id = p.Category.Id, Name = p.Category.Name }
+                        };
 
-            return list;
+             return list;*/
+
+            //IQueryable<Product> >>>>>> IQueryable<ProductViewModel>
+            return _productsRepo.GetProducts().ProjectTo<ProductViewModel>(_autoMapper.ConfigurationProvider);
+
         }
 
 
