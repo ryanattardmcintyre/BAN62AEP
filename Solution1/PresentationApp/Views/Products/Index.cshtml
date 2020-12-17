@@ -6,12 +6,20 @@
 
 <h1>Products Catalogue</h1>
 
+ 
+<hr />
+    <div>
+        @Html.Partial("SearchProductPartial")
+    </div>
+
+ <hr />
+
 
 <div class="container">
     <div class="row">
        @Html.Partial("ProductDisplayPartial", Model)
        </div>
-   </div>
+</div>
 
 
  

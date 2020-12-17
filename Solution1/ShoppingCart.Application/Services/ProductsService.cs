@@ -98,6 +98,15 @@ namespace ShoppingCart.Application.Services
         }
 
 
+        public IQueryable<ProductViewModel> GetProducts(string keyword)
+        {
+            
+            return _productsRepo.GetProducts().Where(p => p.Description.Contains(keyword)  
+                                                     || p.Name.Contains(keyword))          
+                .ProjectTo<ProductViewModel>(_autoMapper.ConfigurationProvider);
+
+        }
+
 
     }
 }

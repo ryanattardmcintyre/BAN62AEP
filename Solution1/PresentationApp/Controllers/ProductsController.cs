@@ -58,13 +58,13 @@ namespace PresentationApp.Controllers
         }
     */
 
-
-      /*  public IActionResult Search(int category) //View you have to use a Form
+        [HttpPost]
+        public IActionResult Search(string keyword) //View you have to use a Form
         {
-            var list = _prodService.GetProducts(category);
-            return RedirectToAction("Index", list);
+            var list = _prodService.GetProducts(keyword);
+            return View("Index", list);
         }
-      */
+       
 
         public IActionResult Details(Guid id)
         {
